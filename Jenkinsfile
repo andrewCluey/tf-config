@@ -1,29 +1,36 @@
 pipeline {
-  agent {
-    docker {
-      image 'cytopia:terragrunt'
-    }
-
-  }
+  agent any
   stages {
-    stage('plan') {
-      steps {
-        sh '''docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \\
+      stage ('git'){
+          steps{
+                  checkout([$class: 'GitSCM', branches: [[name: '*/master']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[url: 'https://github.com/andrewCluey/tf-config.git']]])
+          }
+      }
+      stage('plan') {
+          steps {
+              sh '''docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \\
                 -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \\
-                -v /team2:/data -w /data cytopia/terragrunt terragrunt plan-all --terragrunt-source-update --terragrunt-non-interactive'''
+                -v /var/lib/cloudbees-jenkins-distribution/workspace/tf-test2:/data -w /data/$Team cytopia/terragrunt terragrunt plan-all --terragrunt-source-update --terragrunt-non-interactive''' 
+          }
+          
       }
-    }
-    stage('approval') {
-      steps {
-        input 'approve the plan to proceed and apply'
+      stage('approval') {
+          steps {
+              input 'approve the plan to proceed.'
+              
+          }
+          
       }
-    }
-    stage('apply') {
-      steps {
-        sh '''docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \\
+      stage('finalise') {
+          steps {
+              sh '''docker run --rm -w /data cytopia/terragrunt git clone https://github.com/andrewCluey/tf-config.git'''
+              sh '''docker run --rm -e AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID \\
                     -e AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY \\
-                    -v /team2:/data -w /data/ cytopia/terragrunt terragrunt apply --terragrunt-source-update --terragrunt-non-interactive'''
+                    -v /var/lib/cloudbees-jenkins-distribution/workspace/tf-test2:/data -w /data/$Team cytopia/terragrunt terragrunt apply-all --terragrunt-source-update --terragrunt-non-interactive'''
+
+          }
+          
       }
-    }
+      
   }
 }
