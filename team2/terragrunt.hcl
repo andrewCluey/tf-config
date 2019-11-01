@@ -14,5 +14,6 @@ inputs = {
   aws_region       = "eu-west-2"
   BusinessUnit     = "Test"
   EnvironmentStage = "Development"
+  Environment      = "Dev"
   Team             = "Test1"
 }
