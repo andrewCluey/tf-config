@@ -2,7 +2,7 @@
 # most values are inherited from the parent 'terragrunt.hcl' file.
 
 terraform {
-  source = "../../../../modules//security_groups"
+  source = "git::git@github.com:andrewCluey/terraform-modules.git//modules/aws/security_groups"
 }
 
 include {

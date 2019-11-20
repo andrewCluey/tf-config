@@ -2,7 +2,7 @@
 # Values are inherited from the parent config file (Terragrunt.hcl).
 
 terraform {
-  source = "git::git@github.com:andrewCluey/terraform-modules.git//aws/vpc"
+  source = "git::git@github.com:andrewCluey/terraform-modules.git//modules/aws/vpc"
 }
 
 include {

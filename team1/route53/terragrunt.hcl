@@ -1,5 +1,5 @@
 terraform {
-  source = "../../../../modules//route53"
+  source = "git::git@github.com:andrewCluey/terraform-modules.git//modules/aws/route53"
 }
 
 include {

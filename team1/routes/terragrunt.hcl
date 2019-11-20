@@ -2,7 +2,7 @@
 # Most values are inherited from the parent 'terragrunt.hcl' file.
 
 terraform {
-  source = "../../../../modules//routes"
+  source = "git::git@github.com:andrewCluey/terraform-modules.git//modules/aws/routes"
 }
 
 include {

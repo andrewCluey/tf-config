@@ -5,7 +5,7 @@ remote_state {
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = "eu-west-2"
     encrypt        = true
-    dynamodb_table = "asc-dev-lock"
+    dynamodb_table = "tf-dev-lock"
   }
 }
 
@@ -15,5 +15,5 @@ inputs = {
   BusinessUnit     = "Test"
   EnvironmentStage = "Development"
   Environment      = "Dev"
-  Team             = "Test1"
+  Team             = "Team2"
 }
