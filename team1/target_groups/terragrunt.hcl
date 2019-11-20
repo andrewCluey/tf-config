@@ -2,7 +2,7 @@
 # Some values have been inherited from the parent 'terragrunt.hcl' file.
 
 terraform {
-  source = "git::git@github.com:andrewCluey/terraform-modules.git//modules/aws/target_groups"
+  source = "git::https://github.com/andrewCluey/terraform-modules.git//modules/aws/target_groups"
 }
 dependencies {
   paths = ["../vpc", "../security_groups", "../routes"]
