@@ -1,7 +1,7 @@
 remote_state {
   backend = "s3"
   config = {
-    bucket         = "asc-test-tfa"
+    bucket         = "asc-team1-tfa"
     key            = "${path_relative_to_include()}/terraform.tfstate"
     region         = "eu-west-2"
     encrypt        = true
